@@ -22,7 +22,7 @@ public class UserService {
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(user.getUsername()).set(user);
 
        // return collectionsApiFuture.get().getUpdateTime().toString();
-        return "You have registered and logged in!";
+        return "SUCCESS: You have registered and logged in!";
     }
 
     public String getUserDetails(String name, String password) throws InterruptedException, ExecutionException,NullPointerException {
