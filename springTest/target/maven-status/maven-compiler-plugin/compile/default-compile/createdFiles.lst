@@ -1,0 +1,10 @@
+com\example\demo\DemoApplication.class
+com\example\demo\FBInitialize.class
+com\example\demo\Application.class
+com\example\demo\Dog.class
+com\example\demo\Pet.class
+com\example\demo\Cat.class
+com\example\demo\FirebaseStorageStrategy.class
+com\example\demo\UserController.class
+com\example\demo\UserService.class
+com\example\demo\User.class

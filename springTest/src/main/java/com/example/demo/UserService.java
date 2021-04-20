@@ -21,7 +21,8 @@ public class UserService {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(user.getUsername()).set(user);
 
-        return collectionsApiFuture.get().getUpdateTime().toString();
+       // return collectionsApiFuture.get().getUpdateTime().toString();
+        return "You have registered and logged in!";
     }
 
     public String getUserDetails(String name, String password) throws InterruptedException, ExecutionException,NullPointerException {
@@ -163,6 +164,16 @@ public class UserService {
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(person.getName()).set(person);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }*/
+    public String checkForPosts(String username) throws InterruptedException, ExecutionException{
+        List<Post>initialList = getPosts(username);
+        while(true){
+            Thread.sleep(1000);
+            List<Post>newList = getPosts(username);
+            if(newList.size()>initialList.size()){
+                return "New posts!";
+            }
+        }
+    }
 
     public List<Post> getPosts(String username) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
