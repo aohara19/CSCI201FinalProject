@@ -38,7 +38,9 @@
 <input name = "friend" id ="friend">
 <button onClick="addFriend()">Add friend!</button>
 <button onClick="getReqs()">Get my friend requests!</button>
-
+<label for="friend2">Whose request would you like to accept?</label>
+<input name ="friend2" id ="friend2">
+<button onClick="acceptRequest()">Accept friend request!</button>
 <form id = "setSongForm" action ="/setSong" method="POST">
     <div class="custom-select" style="width:200px;">
         <label for="username2">What user is currently logged in?</label>
@@ -184,6 +186,52 @@
         });
     }
 
+    function acceptRequest(){
+        var friend = $('#friend2').val();
+        $.ajax({
+            url: "acceptFriendRequest",
+            type:"POST",
+            //contentType: "text/plain",
+            data: {"friend": friend},
+            // dataType: "text/plain",
+            success: function(response) {
+                //if(response==="HERE"){
+                //window.location.href = "/loggedInHome.html";
+                //}
+                //else{
+                console.log(response);
+                /*
+                if(response.includes("Success")){
+                    //alert("yes");
+                    window.location.href = 'loggedInHome.html';
+                }
+                else{*/
+                alert(response);
+                // }
+                //	}
+            },
+            error: function(jqXHR,exception){
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                alert(msg);
+            }
+        });
+    }
+
     function getReqs(){
         $.ajax({
             url: "getRequests",
@@ -202,7 +250,7 @@
                     window.location.href = 'loggedInHome.html';
                 }
                 else{*/
-                alert(response);
+                //alert(response);
                 // }
                 //	}
             },
