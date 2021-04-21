@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserService {
+
     public static final String COL_NAME = "users";
 
     public String saveUserDetails(User user) throws InterruptedException, ExecutionException {
@@ -170,8 +171,12 @@ public class UserService {
     }*/
     public String checkForPosts(String username) throws InterruptedException, ExecutionException{
         List<Post>initialList = getPosts(username);
+        long start= System.currentTimeMillis();
         while(true){
-            Thread.sleep(1000);
+            if(System.currentTimeMillis()-start>10000){
+                return "";
+            }
+            Thread.sleep(3000);
             List<Post>newList = getPosts(username);
             if(newList.size()>initialList.size()){
                 return "New posts!";
