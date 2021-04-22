@@ -245,8 +245,9 @@ public class UserService {
         if (document.exists()) {
             thisUser = document2.toObject(User.class);
             String pic = thisUser.getProfilePic();
+            String bio = thisUser.getBio();
             user = document.toObject(User.class);
-            user.addFriendRequest(new Request(username,pic));
+            user.addFriendRequest(new Request(username,pic,bio));
             ApiFuture<WriteResult> collectionsApiFuture1 = dbFirestore.collection(COL_NAME).document(friend).set(user);
             return "Sent friend request to " + friend;
 
@@ -266,7 +267,7 @@ public class UserService {
             user = document.toObject(User.class);
             return user.getFriendRequests();
         } else {
-            invalid.add(new Request("HTTP Session Timed Out; please log in again",""));
+            invalid.add(new Request("HTTP Session Timed Out; please log in again","",""));
             return invalid;
         }
     }
@@ -281,7 +282,7 @@ public class UserService {
             user = document.toObject(User.class);
             // user.removeFriendRequest(username);
             String friendProfilePic = user.getProfilePic();
-
+            String friendBio = user.getBio();
             DocumentReference documentReference1 = dbFirestore.collection(COL_NAME).document(username);
             ApiFuture<DocumentSnapshot> future1 = documentReference1.get();
             DocumentSnapshot document1 = future1.get();
@@ -289,9 +290,10 @@ public class UserService {
             if (document1.exists()) {
                 user1 = document1.toObject(User.class);
                 String myProfilePic = user1.getProfilePic();
+                String myBio = user1.getBio();
                 user1.removeFriendRequest(friend);
-                user.addFriend(new Request(username,myProfilePic));
-                user1.addFriend(new Request(friend,friendProfilePic));
+                user.addFriend(new Request(username,myProfilePic,myBio));
+                user1.addFriend(new Request(friend,friendProfilePic,friendBio));
                 ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(username).set(user1);
                 ApiFuture<WriteResult> collectionsApiFuture1 = dbFirestore.collection(COL_NAME).document(friend).set(user);
                 return "Accepted friend request from " + friend;
